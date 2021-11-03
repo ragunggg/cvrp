@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'cvrp',
-    'social_django',
     'leaflet',
     'rest_framework',
     'rest_framework_gis',
@@ -77,8 +76,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "social_django.context_processors.backends",
-                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -151,10 +148,9 @@ LOGOUT_REDIRECT_URL = "dashboard"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "social_core.backends.github.GithubOAuth2",
 ]
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER' : (-6.8906, 107.6108),
-    'DEFAULT_ZOOM' : 12
+    'DEFAULT_ZOOM' : 14
 }
