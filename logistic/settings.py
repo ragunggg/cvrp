@@ -33,7 +33,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = base64.b64decode(os.getenv('ALLOWED_HOSTS')).decode('ascii').split(' ')
 
-GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal303'
+# GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal303'
 
 # Application definition
 

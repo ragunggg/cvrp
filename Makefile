@@ -27,7 +27,6 @@ down-v:
 
 volume:
 	docker volume inspect cvrp_postgres_data
-	# docker volume inspect cvrp-src_postgres_data
 
 shell:
 	docker exec exec logistic python3 manage.py shell
