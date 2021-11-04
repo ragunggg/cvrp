@@ -68,7 +68,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'users', 'templates', 'users')],
+                 os.path.join(BASE_DIR, 'users', 'templates', 'users'),
+                 os.path.join(BASE_DIR, 'cvrp', 'templates', 'cvrp')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

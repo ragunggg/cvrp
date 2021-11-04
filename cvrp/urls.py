@@ -1,6 +1,6 @@
-from django.urls import path
-from cvrp import views
+from django.conf.urls import url
+from cvrp.views import Clients_view
 
 urlpatterns = [
-    path('', views.cvrp, name='cvrp'),
+    url(r"^client/", Clients_view, name="client_view"),
 ]

@@ -1,0 +1,6 @@
+{% for client in clients %}
+
+<input type="checkbox" name="clients_name" id="option{{client.id}}" value={{client.name}} />
+<label for="option{{client.id}}"><b>{{client.name}}</b></label><br />
+
+{% endfor %}

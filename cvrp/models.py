@@ -2,14 +2,6 @@ from django.contrib.gis.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-
-# class User(models.Model):
-#     name = models.CharField(max_length=100, primary_key=True)
-
-#     def __str__(self):
-#         return "%s the user" % self.name
-
-
 class Depot(models.Model):
     name = models.CharField(_('Depot Name'), max_length=100)
     address = models.CharField(_('Depot Address'), max_length=100, blank=True)
@@ -22,7 +14,7 @@ class Depot(models.Model):
     )
 
     def __str__(self):
-        return "%s the depot of %s" % (self.name, self.user)
+        return self.name
 
 
 class Courier(models.Model):
@@ -36,7 +28,7 @@ class Courier(models.Model):
     )
 
     def __str__(self):
-        return "%s the courier of %s that created at %s" % (self.name, self.user, self.created_at)
+        return self.name
 
 
 class Client(models.Model):
@@ -52,4 +44,4 @@ class Client(models.Model):
     )
 
     def __str__(self):
-        return "%s the client of %s that created at %s" % (self.name, self.user, self.created_at)
+        return self.name
