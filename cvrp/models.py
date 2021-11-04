@@ -8,7 +8,6 @@ class Depot(models.Model):
     location = models.PointField(_('Depot Location'))
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        # to_field=name,
         on_delete=models.CASCADE,
         primary_key=True,
     )
@@ -23,7 +22,6 @@ class Courier(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # to_field=name,
         on_delete=models.CASCADE,
     )
 
@@ -39,7 +37,6 @@ class Client(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # to_field=name,
         on_delete=models.CASCADE,
     )
 
