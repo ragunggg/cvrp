@@ -6,14 +6,13 @@ import pulp
 import itertools
 import random
 
-tooltip = "Tekan!"
 # function for plotting on google maps
 def _plot_on_maps(_df):
     m = folium.Map(location=[-6.8906, 107.6108], zoom_start=14, top=50)
-    folium.Marker([_df.latitude.iloc[0], _df.longitude.iloc[0]], popup="<b>Depot</b>", tooltip=tooltip, icon=folium.Icon(color="red", icon="home")).add_to(m)
+    folium.Marker([_df.latitude.iloc[0], _df.longitude.iloc[0]], popup="<b>Depot</b>", tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
     
     for i in range(1,len(_df)):
-        folium.Marker([_df.latitude.iloc[i], _df.longitude.iloc[i]], popup="<b>Klien</b>", tooltip=tooltip, icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
+        folium.Marker([_df.latitude.iloc[i], _df.longitude.iloc[i]], popup="<b>Klien</b>", tooltip="Tekan!", icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
 
     return m
 

@@ -1,7 +1,7 @@
 <form method="post">
     {% for client in clients %}
 
-    <input type="checkbox" name="clients_name" id="option{{client.id}}" value={{client.name}} />
+    <input type="checkbox" name="clients_list" id="option{{client.id}}" value={{client}} />
     <label for="option{{client.id}}"><b>{{client.name}}</b></label><br />
 
     {% endfor %}
