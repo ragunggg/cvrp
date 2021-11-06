@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from users.forms import CustomUserCreationForm
+from django.contrib.auth.models import Permission
 
 def dashboard(request):
     return render(request, "users/dashboard.html")
@@ -17,6 +18,13 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.backend = "django.contrib.auth.backends.ModelBackend"
+            user.is_staff = True
             user.save()
+            permission_list = ['view_depot','view_courier','view_client',
+                                'add_depot','add_courier','add_client',
+                                'change_depot','change_courier','change_client',
+                                'delete_depot','delete_courier','delete_client']
+            permission_list = list(map(lambda x : Permission.objects.get(codename=x), permission_list))
+            user.user_permissions.add(*permission_list)
             login(request, user)
             return redirect(reverse("dashboard"))

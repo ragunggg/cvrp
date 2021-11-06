@@ -12,6 +12,9 @@ class Depot(models.Model):
         primary_key=True,
     )
 
+    class Meta:
+        default_permissions = ('add', 'change', 'delete', 'view')
+
     def __str__(self):
         return self.name
 
@@ -24,6 +27,9 @@ class Courier(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.name
@@ -39,6 +45,9 @@ class Client(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        default_permissions = ('add', 'change', 'delete', 'view')
 
     def __str__(self):
         return self.name
