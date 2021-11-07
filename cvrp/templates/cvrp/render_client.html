@@ -1,9 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class='client-form'>
 <form method="post">
     {% for client in clients %}
 
-    <input type="checkbox" name="clients_name" id="option{{client.id}}" value={{client.name}} />
+    <input type="checkbox" name="clients_id" id="option{{client.id}}" value={{client.id}} />
     <label for="option{{client.id}}"><b>{{client.name}}</b></label><br />
 
     {% endfor %}
     <input type="submit" value="Run">
 </form>
+</div>
+
+<style type="text/css">
+    .client-form {
+        display: block;
+        margin-top: 50;
+    }
+</style>
+{% endblock %}
