@@ -7,12 +7,12 @@ import itertools
 import random
 
 # function for plotting on google maps
-def _plot_on_maps(latitude, longitude):
-    m = folium.Map(location=[-6.8906, 107.6108], zoom_start=14, top=50)
-    folium.Marker([latitude[0], longitude[0]], popup="<b>Depot</b>", tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
+def _plot_on_maps(latitude, longitude, name_list):
+    m = folium.Map(location=[-6.8906, 107.6108], zoom_start=14, zoom_control=False, top=50)
+    folium.Marker([latitude[0], longitude[0]], popup="<b>Depot :</b><br><b>{}</b>".format(name_list[0]), tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
     
     for i in range(1,len(latitude)):
-        folium.Marker([latitude[i], longitude[i]], popup="<b>Klien</b>", tooltip="Tekan!", icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
+        folium.Marker([latitude[i], longitude[i]], popup="<b>Klien :</b><br><b>{}</b>".format(name_list[i]), tooltip="Tekan!", icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
 
     return m
 
@@ -147,13 +147,13 @@ class visualization(cvrp_solver):
         solution = self.solution
         color = ["%06x" % random.randint(0, 0xFFFFFF) for _ in solution]
 
-        for k, courier in enumerate(solution): 
+        for k, courier in enumerate(solution):
+            fg = folium.FeatureGroup(name='Kurir {}'.format(self.couriers_name[k]))
             for arc in courier:
                 startID = arc[0]
                 endID = arc[1]
                 start = (self.latitude[startID], self.longitude[startID])
                 end = (self.latitude[endID], self.longitude[endID])
-                fg = folium.FeatureGroup(name='Kurir {}'.format(self.couriers_name[k]))
                 route = folium_route(self.G,start,end)
                 route.feature_route(m,fg,'#{}'.format(color[k]))
 

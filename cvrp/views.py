@@ -41,7 +41,8 @@ def Clients_view(request):
         depot_longitude = depot.location[0]
         latitude = [depot_latitude]+clients_latitude
         longitude = [depot_longitude]+clients_longitude
-        m = utils._plot_on_maps(latitude, longitude)
+        name_list = [depot.name]+list(map(lambda x : x.name, clients_list))
+        m = utils._plot_on_maps(latitude, longitude, name_list)
         distance = utils._distance_calculator(G,latitude,longitude)
         model_solver = utils.cvrp_solver(courier_count,courier_capacity,client_count,clients_demand,distance)
         solution = model_solver.run()

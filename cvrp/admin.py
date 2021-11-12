@@ -1,6 +1,5 @@
 from django.contrib import admin
 from leaflet.admin import LeafletGeoAdmin
-
 from .models import Depot, Courier, Client
 
 @admin.register(Depot)
@@ -32,3 +31,14 @@ class ClientAdmin(LeafletGeoAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(user = request.user.id)
+
+# class ClientAdminForm(forms.ModelForm):
+#     class Meta:
+#         model = Client
+#         fields = "__all__"
+
+
+#     def __init__(self, request, *args, **kwargs):
+#         super(ClientAdminForm, self).__init__(request, *args, **kwargs)
+#         if self.instance:
+#             self.fields['user'].queryset = request.user
