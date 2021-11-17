@@ -1,11 +1,9 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from users.forms import CustomUserCreationForm
 from django.contrib.auth.models import Permission
-
-def dashboard(request):
-    return render(request, "users/dashboard.html")
+from django.urls import reverse
+from django.contrib import messages
 
 def register(request):
     if request.method == "GET":
@@ -27,4 +25,7 @@ def register(request):
             permission_list = list(map(lambda x : Permission.objects.get(codename=x), permission_list))
             user.user_permissions.add(*permission_list)
             login(request, user)
-            return redirect(reverse("dashboard"))
+            return redirect('/admin/')
+        else:
+            messages.info(request, 'This account has been taken!')
+            return redirect(reverse('register'))
