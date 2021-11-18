@@ -9,30 +9,23 @@ import random
 # function for plotting on google maps
 def _plot_on_maps(latitude, longitude, name_list):
     m = folium.Map(location=[-6.8906, 107.6108], zoom_start=14, zoom_control=False, top=50)
-    folium.Marker([latitude[0], longitude[0]], popup="<b>Depot : {}</b>".format(name_list[0]), tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
+    folium.Marker([latitude[0], longitude[0]], popup="<b>Depot {}</b>".format(name_list[0]), tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
     
     for i in range(1,len(latitude)):
-        folium.Marker([latitude[i], longitude[i]], popup="<b>Klien : {}</b>".format(name_list[i]), tooltip="Tekan!", icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
+        folium.Marker([latitude[i], longitude[i]], popup="<b>Klien {}</b>".format(name_list[i]), tooltip="Tekan!", icon=folium.Icon(icon="users", prefix='fa')).add_to(m)
 
     return m
 
-class folium_route(object):
+class FoliumRoute:
     def __init__(self,G,start,end):
         self.H = G.copy()
-        self.start = start
-        self.end = end
+        self.start_ID = ox.distance.nearest_nodes(self.H, start[1], start[0])
+        self.end_ID = ox.distance.nearest_nodes(self.H, end[1], end[0])
+        self.shortest_route = ox.shortest_path(self.H, self.start_ID, self.end_ID, weight = 'length')
+        self.shortest_route_length = nx.path_weight(self.H, self.shortest_route, weight="length")
 
-    def shortest_route(self):
-        start_ID = ox.distance.nearest_nodes(self.H, self.start[1], self.start[0])
-        end_ID = ox.distance.nearest_nodes(self.H, self.end[1], self.end[0])
-        shortest_distance = ox.shortest_path(self.H, start_ID, end_ID, weight = 'length')
-        shortest_distance_length = nx.path_weight(self.H, shortest_distance, weight="length")
-    
-        return shortest_distance, shortest_distance_length
-
-    def feature_route(self,m,fg,color='blue'):
-        path, path_length = self.shortest_route()
-        ox.folium.plot_route_folium(self.H, path, route_map=fg, zoom = 14,tiles='OpenStreetMap',color=color,tooltip='<b>Jarak Tempuh : {} m</b>'.format(round(path_length,2))).add_to(m)
+def feature_route(G,m,fg,shortest_route,total_distance,color='blue'):
+    ox.folium.plot_route_folium(G, shortest_route, route_map=fg, zoom = 14,tiles='OpenStreetMap',color=color,tooltip='<b>Jarak Tempuh : {} m</b>'.format(round(total_distance,2))).add_to(m)
 
 # function for calculating distance between two pins
 def _distance_calculator(G,latitude,longitude):
@@ -45,11 +38,10 @@ def _distance_calculator(G,latitude,longitude):
             # calculate distance of all pairs
             start = (latitude[i], longitude[i])
             end = (latitude[j], longitude[j])
-            route = folium_route(G,start,end)
-            _, shortest_distance_length = route.shortest_route()
+            folium_route = FoliumRoute(G,start,end)
 
             # append distance to result list
-            _distance_result[i][j] = shortest_distance_length
+            _distance_result[i][j] = folium_route.shortest_route_length
     
     return _distance_result
 
@@ -115,10 +107,11 @@ class cvrp_solver:
             # print courier_count which needed for solving problem
             # print calculated minimum distance value
             if problem.solve() == 1:
-                print('courier Requirements:', courier_count)
-                print('Moving Distance:', round(pulp.value(problem.objective),2),'meter')
                 break
-
+        
+        if problem.solve() == -1:
+            return False
+            
         # find solution
         solution = []
         for k in range(courier_count):
@@ -149,12 +142,18 @@ class visualization(cvrp_solver):
 
         for k, courier in enumerate(solution):
             fg = folium.FeatureGroup(name='Kurir {}'.format(self.couriers_name[k]))
+            total_distance = 0
+            routes = []
             for arc in courier:
                 startID = arc[0]
                 endID = arc[1]
                 start = (self.latitude[startID], self.longitude[startID])
                 end = (self.latitude[endID], self.longitude[endID])
-                route = folium_route(self.G,start,end)
-                route.feature_route(m,fg,'#{}'.format(color[k]))
+                folium_route = FoliumRoute(self.G, start, end)
+                total_distance += folium_route.shortest_route_length
+                routes.append(folium_route.shortest_route)
+
+            for route in routes:
+                feature_route(self.G,m,fg,route,total_distance,'#{}'.format(color[k]))
 
         return m

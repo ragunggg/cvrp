@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
+from django.urls import reverse
 from cvrp.models import Depot, Courier, Client
 from cvrp import utils, maps
 import osmnx as ox
@@ -46,6 +48,9 @@ def Clients_view(request):
         distance = utils._distance_calculator(G,latitude,longitude)
         model_solver = utils.cvrp_solver(courier_count,courier_capacity,client_count,clients_demand,distance)
         solution = model_solver.run()
+        if not solution:
+            messages.info(request, 'Solution is Infeasible!')
+            return redirect(reverse('cvrp:clients_view'))
         visual = utils.visualization(G,m,latitude,longitude,solution,couriers_name)
         visual_map = visual.cvrp_map()
         map_content = maps.html_template(visual_map,bounding_PolyLine)
@@ -60,4 +65,4 @@ def Clients_view(request):
         'clients': clients
         }
 
-    return render(request, 'cvrp/render_client.html', context)
+    return render(request, 'cvrp/clients_view.html', context)
