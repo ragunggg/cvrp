@@ -7,6 +7,16 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Login">
+    <br/>
+    <a href="{% url 'register' %}">Register</a>
 </form>
-<a href="{% url 'register' %}">Register</a>
+
+<style>
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+</style>
 {% endblock %}

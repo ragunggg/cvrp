@@ -1,13 +1,32 @@
 <style>
+    body {
+        text-align: center;
+    }
     label, input {
         display: block;
     }
     span.helptext {
         display: none;
     }
-</style>
+    a {
+    color: #0060B6;
+    text-decoration: none;
+    }
 
+    a:hover {
+        color:#00A0C6; 
+        text-decoration:none; 
+        cursor:pointer;  
+    }
+    input[type=submit] {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+</style>
+<body>
 <h1>Welcome to CVRP DSS</h1>
 
 {% block content %}
 {% endblock %}
+</body>

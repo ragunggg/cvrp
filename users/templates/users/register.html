@@ -3,19 +3,28 @@
 {% block content %}
 <h2>Register</h2>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
 <form method="post">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
     {% csrf_token %}
     {{form}}
     <input type="submit" value="Register">
+    <br/>
+    <a href="{% url 'login' %}">Back to login</a>
 </form>
 
-<a href="{% url 'login' %}">Back to login</a>
+<style>
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+</style>
 {% endblock %}
