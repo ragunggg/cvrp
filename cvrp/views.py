@@ -7,12 +7,17 @@ from cvrp.models import Depot, Courier, Client
 from cvrp import utils, maps
 import osmnx as ox
 import folium
+import pickle
+import os
 
-# Defining the map boundaries 
-north, east, south, west = -6.8686, 107.636, -6.9181, 107.5862
+script_dir = os.path.dirname(__file__)
+rel_path = "data/G.obj"
+abs_file_path = os.path.join(script_dir, rel_path)
 
-# Extracting the map as a graph object 
-G = ox.graph_from_bbox(north, south, east, west, network_type = 'drive',simplify=True) 
+north, east, south, west = -6.8606, 107.5534, -6.9660, 107.6602
+
+with open(abs_file_path, 'rb') as f:
+    G = pickle.load(f)
 
 coordinates = [[north,west],
                [north,east],

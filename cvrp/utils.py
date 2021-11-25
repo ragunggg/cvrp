@@ -8,7 +8,7 @@ import random
 
 # function for plotting on google maps
 def _plot_on_maps(latitude, longitude, name_list):
-    m = folium.Map(location=[-6.8906, 107.6108], zoom_start=14, zoom_control=False, top=50)
+    m = folium.Map(location=[-6.9133, 107.6068], zoom_start=13, zoom_control=False, top=50)
     folium.Marker([latitude[0], longitude[0]], popup="<b>Depot {}</b>".format(name_list[0]), tooltip="Tekan!", icon=folium.Icon(color="red", icon="home")).add_to(m)
     
     for i in range(1,len(latitude)):

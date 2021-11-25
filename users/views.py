@@ -27,5 +27,5 @@ def register(request):
             login(request, user)
             return redirect('/admin/')
         else:
-            messages.info(request, 'This account has been taken!')
+            messages.info(request, 'There is something wrong with your registration. Please try again!')
             return redirect(reverse('register'))
