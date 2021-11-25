@@ -18,6 +18,7 @@ djangorestframework==3.12.4
 djangorestframework-gis==0.17
 entrypoints==0.3
 folium==0.12.1
+gunicorn==20.1.0
 idna==3.3
 ipykernel==6.5.0
 ipython==7.29.0
