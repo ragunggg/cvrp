@@ -4,7 +4,7 @@ setup:
 
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile.dev
 
 run:
   web: gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
