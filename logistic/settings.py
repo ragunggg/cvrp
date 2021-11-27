@@ -14,6 +14,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import base64
+import dj_database_url
 
 # dotenv_path = Path('../.env')
 load_dotenv()
@@ -100,6 +101,9 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
