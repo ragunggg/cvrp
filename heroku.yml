@@ -13,7 +13,4 @@ build:
     env_file: .env
 
 run:
-  web:
-    command: 
-      - gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
-    image: logistic
+  logistic: gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
