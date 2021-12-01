@@ -22,6 +22,8 @@ build:
       --file ./Dockerfile.dev
       "."
     - docker push $IMAGE:latest
+  only:
+    - main
 
 deploy:
   stage: deploy
