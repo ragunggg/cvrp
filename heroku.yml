@@ -7,10 +7,10 @@ setup:
 
 build:
   docker:
-    logistic: Dockerfile.dev
+    web: Dockerfile.dev
     nginx: nginx/Dockerfile.dev
   config:
     env_file: .env
 
 run:
-  logistic: gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
