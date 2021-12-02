@@ -8,7 +8,7 @@ setup:
 build:
   docker:
     web: Dockerfile.dev
-    nginx: nginx/Dockerfile.dev
+    # nginx: nginx/Dockerfile.dev
   config:
     env_file: .env
 
