@@ -27,12 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = base64.b64decode(os.getenv('SECRET_KEY')).decode('ascii')
+SECRET_KEY = base64.b64decode(os.environ.get('SECRET_KEY')).decode('ascii')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+# DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = base64.b64decode(os.getenv('ALLOWED_HOSTS')).decode('ascii').split(' ')
+ALLOWED_HOSTS = base64.b64decode(os.environ.get('ALLOWED_HOSTS')).decode('ascii').split(' ')
 
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal303'
 
@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'logistic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASS'),
-        'HOST': os.getenv('PG_HOST'),
-        'PORT': os.getenv('PG_PORT')
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'NAME': os.getenv('POSTGRES_DB'),
+        # 'USER': os.getenv('POSTGRES_USER'),
+        # 'PASSWORD': os.getenv('POSTGRES_PASS'),
+        # 'HOST': os.getenv('PG_HOST'),
+        # 'PORT': os.getenv('PG_PORT')
     }
 }
 
