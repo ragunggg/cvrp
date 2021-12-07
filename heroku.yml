@@ -2,15 +2,11 @@ setup:
   addons:
     - plan: heroku-postgresql
       as: DATABASE
-  config:
-    env_file: .env
 
 build:
   docker:
     web: Dockerfile.dev
     # nginx: nginx/Dockerfile.dev
-  config:
-    env_file: .env
 
 run:
   web: gunicorn logistic.wsgi:application --bind 0.0.0.0:$PORT
