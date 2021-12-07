@@ -28,12 +28,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = base64.b64decode(os.getenv('SECRET_KEY', base64.b64encode(get_random_secret_key().encode('ascii')))).decode('ascii')
+SECRET_KEY = base64.b64decode(os.getenv('SECRET_KEY', default=base64.b64encode(get_random_secret_key().encode('ascii')))).decode('ascii')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = base64.b64decode(os.environ.get('ALLOWED_HOSTS')).decode('ascii').split(' ')
+# ALLOWED_HOSTS = base64.b64decode(os.environ.get('ALLOWED_HOSTS')).decode('ascii').split(' ')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cvrp-bandung.herokuapp.com']
 
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal303'
 
@@ -103,8 +104,8 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL)
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
 # Password validation
