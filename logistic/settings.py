@@ -14,7 +14,6 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import base64
-import django_heroku
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 
@@ -175,6 +174,3 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 12,
     'RESET_VIEW': False,
 }
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
